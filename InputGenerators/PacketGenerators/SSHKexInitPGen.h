@@ -9,8 +9,8 @@
 #define SSHKEXINIT_H
 
 #define COOKIE_LEN 16
-#define MAX_ALGO_NAME_LEN 10000
-#define MAX_ALGO_LIST_LEN 100
+#define MAX_ALGO_NAME_LEN 20
+#define MAX_ALGO_LIST_LEN 10
 #define ALGO_NAME_SEP ','
 
 #define KEX 0

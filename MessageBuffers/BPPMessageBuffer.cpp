@@ -12,11 +12,12 @@ unsigned char* BPPMessageBuffer::getProcessedMessage(unsigned int &msgLen) {
     unsigned char paddingLen = (8 - modulo8) + 8 * (rand() % 30);
     printf("Padding len %x\n", paddingLen);
     unsigned int totalPacketLength = sizeof(unsigned int) + sizeof(unsigned char) + msgLen + paddingLen;
-    printf("Total Pkt len %x\n", totalPacketLength);
+    unsigned int packetLength = sizeof(unsigned char) + msgLen + paddingLen;
+    printf("Pkt len %x\n", packetLength);
     unsigned char *buff = (unsigned char *) calloc(totalPacketLength, sizeof(unsigned char));
     unsigned int i = 0;
-    unsigned int ntotalPacketLength = htonl(totalPacketLength);
-    memcpy(buff, &ntotalPacketLength, sizeof(unsigned int));
+    unsigned int npacketLength = htonl(packetLength);
+    memcpy(buff, &npacketLength, sizeof(unsigned int));
     memcpy(buff + sizeof(unsigned int), &paddingLen, sizeof(unsigned char));
     i += sizeof(unsigned int) + sizeof(unsigned char);
     for (vector<unsigned char>::iterator it = this->buffer.begin(); it != this->buffer.end(); ++it) {

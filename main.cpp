@@ -13,7 +13,9 @@ int main(int argc, char *argv[]) {
     fuzzer->setSSHServerIPAddr(argv[1]);
     fuzzer->setSSHServerPort(atoi(argv[2]));
     fuzzer->setN(atoi(argv[3]));
-    fuzzer->fuzz();
+    while (true) {
+    	fuzzer->fuzz();
+    }
     delete fuzzer;
     
     return 0;

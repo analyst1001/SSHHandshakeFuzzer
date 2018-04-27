@@ -7,7 +7,6 @@
 
 SSHHandshakeStepNValidateFuzzer::SSHHandshakeStepNValidateFuzzer() {
     this->strategy = new StepNValidateFuzzStrategy();
-//    this->strategy->setWaitForOutput(true);
     this->stream = new SSHClientIOStream();
     this->srvPort = 22;
     this->n = 0;
@@ -47,8 +46,14 @@ void SSHHandshakeStepNValidateFuzzer::fuzz() {
     inputGenerators.push_back(pkt1Gen);
     inputGenerators.push_back(pkt2Gen);
     inputGenerators.push_back(pkt3Gen);
+    
+    vector<bool> waitForOutput;
+    waitForOutput.push_back(true);
+    waitForOutput.push_back(false);
+    waitForOutput.push_back(true);
+    waitForOutput.push_back(false);
 
-    this->strategy->setN(this->n, inputStreams, outputStreams, inputGenerators);
+    this->strategy->setN(this->n, inputStreams, outputStreams, inputGenerators, waitForOutput);
     this->strategy->applyStrategy();
 
     inputGenerators.clear();

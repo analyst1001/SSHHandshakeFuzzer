@@ -15,16 +15,14 @@ class StepNValidateFuzzStrategy : public FuzzStrategy {
         vector<IStream*> outputStreams;
         vector<ValidInvalidInputGenerator*> inputGenerators;
         void (*verify)(MessageBuffer*);
-        bool waitForOutput;
+        vector<bool> waitForOutput;
 
     public:
         StepNValidateFuzzStrategy();
         void applyStrategy();
-        void setN(unsigned int n, vector<OStream*> inputStreams, vector<IStream*> outputStreams, vector<ValidInvalidInputGenerator*> inputGenerators);
+        void setN(unsigned int n, vector<OStream*> inputStreams, vector<IStream*> outputStreams, vector<ValidInvalidInputGenerator*> inputGenerators, vector<bool> waitForOutput);
         void setVerify(void (*verify)(MessageBuffer*));
         unsigned int getN();
-        void setWaitForOutput(bool waitForOutput);
-        bool getWaitForOutput();
 
 };
 #endif

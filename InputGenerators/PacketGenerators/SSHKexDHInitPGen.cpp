@@ -2,6 +2,7 @@
 #include "../../MessageBuffers/BPPMessageBuffer.h"
 #include <ctime>
 #include <cstdlib>
+#include <arpa/inet.h>
 
 BPPMessageBuffer *SSHKexDHInitPacketGenerator::generatePacket(MessageBuffer *prevOutput) {
     srand(time(NULL));
@@ -39,7 +40,7 @@ BPPMessageBuffer *SSHKexDHInitPacketGenerator::generateValidPacket() {
 
     BPPMessageBuffer *validMPInt = generateValidMPInt();
     unsigned int mpintSize = validMPInt->length();
-    packet->append(mpintSize);
+    packet->append(htonl(mpintSize));
     packet->append(validMPInt);
     delete validMPInt;
 
@@ -73,7 +74,6 @@ BPPMessageBuffer *SSHKexDHInitPacketGenerator::generateValidMPInt() {
     // for now, we use a predefined e value over the single group we negotiated
     
     unsigned int mpIntSize = 32;
-    mpIntVal->append(mpIntSize);
     
     unsigned char e[] = {0x83, 0x8f, 0x2f, 0x07, 0xb6, 0x77, 0xe1, 0xff, 0x39, 0x70, 0xf4, 0x5f, 0x7a, 0xf3, 0xe3, 0x7f, 0xb3, 0xbc, 0xcf, 0x6c, 0xc2, 0x8a, 0x6a, 0x92, 0x4b, 0x0e, 0x49, 0x8a, 0x77, 0x58, 0x70, 0x03};
     for (unsigned int i = 0; i < mpIntSize; i++) {

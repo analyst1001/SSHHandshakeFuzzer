@@ -5,21 +5,21 @@
 StepNValidateFuzzStrategy::StepNValidateFuzzStrategy() {
     this->n = 0;
     this->verify = NULL;
-    this->waitForOutput = false;
 }
 
 unsigned int StepNValidateFuzzStrategy::getN() {
     return this->n;
 }
 
-void StepNValidateFuzzStrategy::setN(unsigned int n, vector<OStream*> inputStreams, vector<IStream*> outputStreams, vector<ValidInvalidInputGenerator*> inputGenerators) {
+void StepNValidateFuzzStrategy::setN(unsigned int n, vector<OStream*> inputStreams, vector<IStream*> outputStreams, vector<ValidInvalidInputGenerator*> inputGenerators, vector<bool> waitForOutput) {
     this->n = n;
-    if (inputStreams.size() >= n && outputStreams.size() >= n) {
+    if (inputStreams.size() >= n && outputStreams.size() >= n && inputGenerators.size() >= n && waitForOutput.size() >= n) {
         this->inputStreams.assign(inputStreams.begin(), inputStreams.end());
         this->inputStreams.resize(n);
         this->outputStreams.assign(outputStreams.begin(), outputStreams.end());
         this->outputStreams.resize(n);
         this->inputGenerators.assign(inputGenerators.begin(), inputGenerators.end());
+	this->waitForOutput.assign(waitForOutput.begin(), waitForOutput.end());
         for (unsigned int i = 0; i < n; i++) {
             this->inputGenerators[i]->setGenerateValid(true);
         }
@@ -34,14 +34,6 @@ void StepNValidateFuzzStrategy::setVerify(void (*verify)(MessageBuffer *)) {
     this->verify = verify;
 }
 
-void StepNValidateFuzzStrategy::setWaitForOutput(bool waitForOutput) {
-    this->waitForOutput = waitForOutput;
-}
-
-bool StepNValidateFuzzStrategy::getWaitForOutput() {
-    return this->waitForOutput;
-}
-
 void StepNValidateFuzzStrategy::applyStrategy() {
     MessageBuffer *msgSend = NULL;
     MessageBuffer *msgRecv = NULL;
@@ -52,11 +44,12 @@ void StepNValidateFuzzStrategy::applyStrategy() {
         // delete the previous message read from output
         if (msgRecv) {
             delete msgRecv;
+	    msgRecv = NULL;
         }
         this->inputStreams[i]->write(msgSend);
         delete msgSend;
 
-        if (getWaitForOutput()) {
+        if (this->waitForOutput[i]) {
             msgRecv = this->outputStreams[i]->read();   
         }
     }
@@ -67,5 +60,7 @@ void StepNValidateFuzzStrategy::applyStrategy() {
     if (verify != NULL) {
         verify(msgRecv);
     }
-    delete msgRecv;
+    if (msgRecv) {
+        delete msgRecv;
+    }
 }

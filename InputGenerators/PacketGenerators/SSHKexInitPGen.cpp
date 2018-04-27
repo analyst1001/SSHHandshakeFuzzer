@@ -2,9 +2,10 @@
 #include "../../MessageBuffers/BPPMessageBuffer.h"
 #include <iostream>
 #include <cstdio>
+#include <arpa/inet.h>
 
 SSHKexInitPacketGenerator::SSHKexInitPacketGenerator() {
-    string kexAlgo1("curve25619-sha256");
+    string kexAlgo1("curve25519-sha256");
     this->kexAlgoList.push_back(kexAlgo1);//,"curve25619-sha256@libssh.org","ecdh-sha2-nistp521","ecdh-sha2-nistp384","ecdh-sha2-nistp256","diffie-hellman-group14-sha256","diffie-hellman-group14-sha1","diffie-hellman-group1-sha1","kexguess2@matt.ucc.asn.au"];
 
     string srvHostKeyAlgo1("ecdsa-sha2-nistp256");
@@ -17,7 +18,7 @@ SSHKexInitPacketGenerator::SSHKexInitPacketGenerator() {
     this->macAlgoList.push_back(macAlgo1);//,"hmac-sha1","hmac-sha2-256"];
 
     string compAlgo1("zlib@openssh.com");
-    this->compAlgoList.push_back(compAlgo1);//,"zlib","none"];
+    this->compAlgoList.push_back(compAlgo1);
 }
 
 BPPMessageBuffer *SSHKexInitPacketGenerator::generateCookie() {
@@ -261,7 +262,7 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidPacket() {
     
     BPPMessageBuffer *kexAlgoList = generateValidAlgorithmList(KEX);
     unsigned int kexAlgoListLen = kexAlgoList->length();
-    packet->append(kexAlgoListLen);
+    packet->append(htonl(kexAlgoListLen));
     packet->append(kexAlgoList);
     delete kexAlgoList;
     for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
@@ -271,7 +272,7 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidPacket() {
 
     BPPMessageBuffer *srvHostKeyAlgoList = generateValidAlgorithmList(SRV_HOST_KEY);
     unsigned int srvHostKeyAlgoListLen = srvHostKeyAlgoList->length();
-    packet->append(srvHostKeyAlgoListLen);
+    packet->append(htonl(srvHostKeyAlgoListLen));
     packet->append(srvHostKeyAlgoList);
     delete srvHostKeyAlgoList;
     for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
@@ -281,46 +282,46 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidPacket() {
 
     BPPMessageBuffer *encAlgoListCS = generateValidAlgorithmList(ENCRYPTION);
     unsigned int encAlgoListCSLen = encAlgoListCS->length();
-    packet->append(encAlgoListCSLen);
+    packet->append(htonl(encAlgoListCSLen));
     packet->append(encAlgoListCS);
     delete encAlgoListCS;
 
     BPPMessageBuffer *encAlgoListSC = generateValidAlgorithmList(ENCRYPTION);
     unsigned int encAlgoListSCLen = encAlgoListSC->length();
-    packet->append(encAlgoListSCLen);
+    packet->append(htonl(encAlgoListSCLen));
     packet->append(encAlgoListSC);
     delete encAlgoListSC;
     
     BPPMessageBuffer *macAlgoListCS = generateValidAlgorithmList(MAC);
     unsigned int macAlgoListCSLen = macAlgoListCS->length();
-    packet->append(macAlgoListCSLen);
+    packet->append(htonl(macAlgoListCSLen));
     packet->append(macAlgoListCS);
     delete macAlgoListCS;
 
     BPPMessageBuffer *macAlgoListSC = generateValidAlgorithmList(MAC);
     unsigned int macAlgoListSCLen = macAlgoListSC->length();
-    packet->append(macAlgoListSCLen);
+    packet->append(htonl(macAlgoListSCLen));
     packet->append(macAlgoListSC);
     delete macAlgoListSC;
     
     BPPMessageBuffer *compAlgoListCS = generateValidAlgorithmList(COMPRESSION);
     unsigned int compAlgoListCSLen = compAlgoListCS->length();
-    packet->append(compAlgoListCSLen);
+    packet->append(htonl(compAlgoListCSLen));
     packet->append(compAlgoListCS);
     delete compAlgoListCS;
 
     BPPMessageBuffer *compAlgoListSC = generateValidAlgorithmList(COMPRESSION);
     unsigned int compAlgoListSCLen = compAlgoListSC->length();
-    packet->append(compAlgoListSCLen);
+    packet->append(htonl(compAlgoListSCLen));
     packet->append(compAlgoListSC);
     delete compAlgoListSC;
 
     
     unsigned int langListCSLen = 0;
-    packet->append(langListCSLen);
+    packet->append(htonl(langListCSLen));
 
     unsigned int langListSCLen = 0;
-    packet->append(langListSCLen);
+    packet->append(htonl(langListSCLen));
 
     // we will not send kex guess message for valid case
     packet->push_back(0);
