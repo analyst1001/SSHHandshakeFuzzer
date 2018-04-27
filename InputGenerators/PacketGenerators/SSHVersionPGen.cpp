@@ -3,29 +3,29 @@
 #include <cstdlib>
 #include <ctime>
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateRandomPacket() {
-    BPPMessageBuffer *packet = new BPPMessageBuffer();
+PlainMessageBuffer *SSHVersionPacketGenerator::generateRandomPacket() {
+    PlainMessageBuffer *packet = new PlainMessageBuffer();
 
-    BPPMessageBuffer *sshPrefix = generateRandomSSHPrefix();
+    PlainMessageBuffer *sshPrefix = generateRandomSSHPrefix();
     packet->append(sshPrefix);
     delete sshPrefix;
 
     packet->push_back('-');
 
-    BPPMessageBuffer *protoVer = generateRandomProtoVersion();
+    PlainMessageBuffer *protoVer = generateRandomProtoVersion();
     packet->append(protoVer);
     delete protoVer;
 
     packet->push_back('-');
 
-    BPPMessageBuffer *softVer = generateRandomSoftwareVersion();
+    PlainMessageBuffer *softVer = generateRandomSoftwareVersion();
     packet->append(softVer);
     delete softVer;
 
     if (rand() % 2) {
         packet->push_back(' ');
 
-        BPPMessageBuffer *comment = generateRandomComment();
+        PlainMessageBuffer *comment = generateRandomComment();
         packet->append(comment);
         delete comment;
     }
@@ -36,22 +36,22 @@ BPPMessageBuffer *SSHVersionPacketGenerator::generateRandomPacket() {
 
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateValidPacket() {
-    BPPMessageBuffer *packet = new BPPMessageBuffer();
+PlainMessageBuffer *SSHVersionPacketGenerator::generateValidPacket() {
+    PlainMessageBuffer *packet = new PlainMessageBuffer();
 
-    BPPMessageBuffer *sshPrefix = generateValidSSHPrefix();
+    PlainMessageBuffer *sshPrefix = generateValidSSHPrefix();
     packet->append(sshPrefix);
     delete sshPrefix;
 
     packet->push_back('-');
 
-    BPPMessageBuffer *protoVer = generateValidProtoVersion();
+    PlainMessageBuffer *protoVer = generateValidProtoVersion();
     packet->append(protoVer);
     delete protoVer;
 
     packet->push_back('-');
 
-    BPPMessageBuffer *softVer = generateValidSoftwareVersion();
+    PlainMessageBuffer *softVer = generateValidSoftwareVersion();
     packet->append(softVer);
     delete softVer;
 
@@ -60,20 +60,20 @@ BPPMessageBuffer *SSHVersionPacketGenerator::generateValidPacket() {
 
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateValidSSHPrefix() {
-    return new BPPMessageBuffer("SSH");
+PlainMessageBuffer *SSHVersionPacketGenerator::generateValidSSHPrefix() {
+    return new PlainMessageBuffer("SSH");
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateRandomSSHPrefix() {
-    BPPMessageBuffer *prefix = new BPPMessageBuffer();
+PlainMessageBuffer *SSHVersionPacketGenerator::generateRandomSSHPrefix() {
+    PlainMessageBuffer *prefix = new PlainMessageBuffer();
     for (unsigned int i = 0; i < 3; i++) {
         prefix->push_back(rand() % 256);
     }
     return prefix;
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateRandomProtoVersion() {
-    BPPMessageBuffer *protoVer = new BPPMessageBuffer();
+PlainMessageBuffer *SSHVersionPacketGenerator::generateRandomProtoVersion() {
+    PlainMessageBuffer *protoVer = new PlainMessageBuffer();
     unsigned int protoVerLen = rand() % MAX_PROTO_VER_LEN;
     for (unsigned int i = 0; i < protoVerLen; i++) {
         protoVer->push_back(rand() % 256);
@@ -81,33 +81,33 @@ BPPMessageBuffer *SSHVersionPacketGenerator::generateRandomProtoVersion() {
     return protoVer;
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateValidProtoVersion() {
-    return new BPPMessageBuffer("2.0");
+PlainMessageBuffer *SSHVersionPacketGenerator::generateValidProtoVersion() {
+    return new PlainMessageBuffer("2.0");
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateValidSoftwareVersion() {
-    return new BPPMessageBuffer("dropbear_2018.76");
+PlainMessageBuffer *SSHVersionPacketGenerator::generateValidSoftwareVersion() {
+    return new PlainMessageBuffer("dropbear_2018.76");
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateRandomSoftwareVersion() {
+PlainMessageBuffer *SSHVersionPacketGenerator::generateRandomSoftwareVersion() {
     unsigned int softVerLen = rand() % MAX_SOFT_VER_LEN;
-    BPPMessageBuffer *softVer = new BPPMessageBuffer();
+    PlainMessageBuffer *softVer = new PlainMessageBuffer();
     for (unsigned int i = 0; i < softVerLen; i++) {
         softVer->push_back(rand() % 256);
     }
     return softVer;
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generateRandomComment() {
+PlainMessageBuffer *SSHVersionPacketGenerator::generateRandomComment() {
    unsigned int commentLen = rand() % MAX_COMMENT_LEN;
-   BPPMessageBuffer *comment = new BPPMessageBuffer();
+   PlainMessageBuffer *comment = new PlainMessageBuffer();
    for (unsigned int i = 0; i < commentLen; i++) {
        comment->push_back(rand() % 256);
    }
    return comment;
 }
 
-BPPMessageBuffer *SSHVersionPacketGenerator::generatePacket(MessageBuffer *prevOutput) {
+PlainMessageBuffer *SSHVersionPacketGenerator::generatePacket(MessageBuffer *prevOutput) {
     srand(time(NULL));
     if (getGenerateValid()) {
         return generateValidPacket();

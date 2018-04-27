@@ -1,5 +1,5 @@
 #include "PacketGenerator.h"
-#include "../../MessageBuffers/BPPMessageBuffer.h"
+#include "../../MessageBuffers/PlainMessageBuffer.h"
 
 #ifndef VERPGEN_H
 #define VERPGEN_H
@@ -10,20 +10,20 @@
 
 class SSHVersionPacketGenerator : public PacketGenerator {
     private:
-        BPPMessageBuffer *generateValidSSHPrefix();
-        BPPMessageBuffer *generateValidProtoVersion();
-        BPPMessageBuffer *generateValidSoftwareVersion();
+        PlainMessageBuffer *generateValidSSHPrefix();
+        PlainMessageBuffer *generateValidProtoVersion();
+        PlainMessageBuffer *generateValidSoftwareVersion();
 
-        BPPMessageBuffer *generateRandomSSHPrefix();
-        BPPMessageBuffer *generateRandomProtoVersion();
-        BPPMessageBuffer *generateRandomSoftwareVersion();
-        BPPMessageBuffer *generateRandomComment();
+        PlainMessageBuffer *generateRandomSSHPrefix();
+        PlainMessageBuffer *generateRandomProtoVersion();
+        PlainMessageBuffer *generateRandomSoftwareVersion();
+        PlainMessageBuffer *generateRandomComment();
 
-        BPPMessageBuffer *generateValidPacket();
-        BPPMessageBuffer *generateRandomPacket();
+        PlainMessageBuffer *generateValidPacket();
+        PlainMessageBuffer *generateRandomPacket();
 
 
     public:
-        BPPMessageBuffer *generatePacket(MessageBuffer *prevOutput);
+        PlainMessageBuffer *generatePacket(MessageBuffer *prevOutput);
 };
 #endif
