@@ -45,11 +45,14 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateRandomAlgorithmList() {
 
         BPPMessageBuffer *algoName = generateRandomAlgorithmName();
         algoList->append(algoName);
+        cout<<"algolist length "<<algoList->length()<<endl;
         delete algoName;
 
         algoList->push_back(ALGO_NAME_SEP);
     }
-    algoList->pop_back();
+    if (algoList->length() > 0) {
+        algoList->pop_back();
+    }
     return algoList;
 }
 
@@ -103,62 +106,62 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateRandomPacket() {
     delete cookie;
 
     BPPMessageBuffer *kexAlgoList = generateRandomAlgorithmList();
-    unsigned int kexAlgoListLen = correctLengths == true ? kexAlgoList->length() : rand();
+    unsigned int kexAlgoListLen = correctLengths == true ? kexAlgoList->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(kexAlgoListLen);
     packet->append(kexAlgoList);
     delete kexAlgoList;
 
     BPPMessageBuffer *srvHostKeyAlgoList = generateRandomAlgorithmList();
-    unsigned int srvHostKeyAlgoListLen = correctLengths == true ? srvHostKeyAlgoList->length() : rand();
+    unsigned int srvHostKeyAlgoListLen = correctLengths == true ? srvHostKeyAlgoList->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(srvHostKeyAlgoListLen);
     packet->append(srvHostKeyAlgoList);
     delete srvHostKeyAlgoList;
     
     BPPMessageBuffer *encAlgoListCS = generateRandomAlgorithmList();
-    unsigned int encAlgoListCSLen = correctLengths == true ? encAlgoListCS->length() : rand();
+    unsigned int encAlgoListCSLen = correctLengths == true ? encAlgoListCS->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(encAlgoListCSLen);
     packet->append(encAlgoListCS);
     delete encAlgoListCS;
 
     BPPMessageBuffer *encAlgoListSC = generateRandomAlgorithmList();
-    unsigned int encAlgoListSCLen = correctLengths == true ? encAlgoListSC->length() : rand();
+    unsigned int encAlgoListSCLen = correctLengths == true ? encAlgoListSC->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(encAlgoListSCLen);
     packet->append(encAlgoListSC);
     delete encAlgoListSC;
 
 
     BPPMessageBuffer *macAlgoListCS = generateRandomAlgorithmList();
-    unsigned int macAlgoListCSLen = correctLengths == true ? macAlgoListCS->length() : rand();
+    unsigned int macAlgoListCSLen = correctLengths == true ? macAlgoListCS->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(macAlgoListCSLen);
     packet->append(macAlgoListCS);
     delete macAlgoListCS;
 
     BPPMessageBuffer *macAlgoListSC = generateRandomAlgorithmList();
-    unsigned int macAlgoListSCLen = correctLengths == true ? macAlgoListSC->length() : rand();
+    unsigned int macAlgoListSCLen = correctLengths == true ? macAlgoListSC->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(macAlgoListSCLen);
     packet->append(macAlgoListSC);
     delete macAlgoListSC;
 
     BPPMessageBuffer *compAlgoListCS = generateRandomAlgorithmList();
-    unsigned int compAlgoListCSLen = correctLengths == true ? compAlgoListCS->length() : rand();
+    unsigned int compAlgoListCSLen = correctLengths == true ? compAlgoListCS->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(compAlgoListCSLen);
     packet->append(compAlgoListCS);
     delete compAlgoListCS;
 
     BPPMessageBuffer *compAlgoListSC = generateRandomAlgorithmList();
-    unsigned int compAlgoListSCLen = correctLengths == true ? compAlgoListSC->length() : rand();
+    unsigned int compAlgoListSCLen = correctLengths == true ? compAlgoListSC->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(compAlgoListSCLen);
     packet->append(compAlgoListSC);
     delete compAlgoListSC;
 
     BPPMessageBuffer *langListCS = generateRandomAlgorithmList();
-    unsigned int langListCSLen = correctLengths == true ? langListCS->length() : rand();
+    unsigned int langListCSLen = correctLengths == true ? langListCS->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(langListCSLen);
     packet->append(langListCS);
     delete langListCS;
 
     BPPMessageBuffer *langListSC = generateRandomAlgorithmList();
-    unsigned int langListSCLen = correctLengths == true ? langListSC->length() : rand();
+    unsigned int langListSCLen = correctLengths == true ? langListSC->length() : (rand() % (MAX_ALGO_LIST_LEN * MAX_ALGO_NAME_LEN));
     packet->append(langListSCLen);
     packet->append(langListSC);
     delete langListSC;

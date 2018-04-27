@@ -7,3 +7,7 @@ void ValidInvalidInputGenerator::setGenerateValid(bool valid) {
 bool ValidInvalidInputGenerator::getGenerateValid() {
     return this->generateValid;
 }
+
+ValidInvalidInputGenerator::ValidInvalidInputGenerator() {
+    this->generateValid = false;
+}

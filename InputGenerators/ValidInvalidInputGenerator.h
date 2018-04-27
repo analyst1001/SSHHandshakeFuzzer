@@ -7,6 +7,7 @@ class ValidInvalidInputGenerator : public InputGenerator {
         bool generateValid;
 
     public:
+	ValidInvalidInputGenerator();
         void setGenerateValid(bool valid);
         bool getGenerateValid();
 };

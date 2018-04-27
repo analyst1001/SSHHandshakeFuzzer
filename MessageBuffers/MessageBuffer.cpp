@@ -1,6 +1,7 @@
 #include "MessageBuffer.h"
 #include <cstring>
 #include <cstdlib>
+#include <iostream>
 
 MessageBuffer::MessageBuffer() {
 }
@@ -37,6 +38,7 @@ unsigned char* MessageBuffer::getMessage(unsigned int &msgLen) {
     unsigned char *buff = (unsigned char *) calloc(msgLen, sizeof(unsigned char));
     unsigned int i = 0;
     for (vector<unsigned char>::iterator it = this->buffer.begin(); it != this->buffer.end(); ++it) {
+        cout<<"i= "<<i<<" "<<msgLen<<endl;
         buff[i++] = *it;
     }
     return buff;
