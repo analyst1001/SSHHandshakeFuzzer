@@ -39,7 +39,7 @@ char *SSHClientIOStream::getSSHServerAddr() {
 }
 
 void SSHClientIOStream::openStream() {
-    if (this->sockfd = socket(AF_INET, SOCK_STREAM, 0) < 0) {
+    if ((this->sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("socket");
         throw "Error creating socket for SSH client connection";
     }

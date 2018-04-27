@@ -20,7 +20,6 @@ void StepNValidateFuzzStrategy::setN(unsigned int n, vector<OStream*> inputStrea
         this->outputStreams.assign(outputStreams.begin(), outputStreams.end());
         this->outputStreams.resize(n);
         this->inputGenerators.assign(inputGenerators.begin(), inputGenerators.end());
-        this->inputGenerators.resize(n);
         for (unsigned int i = 0; i < n; i++) {
             this->inputGenerators[i]->setGenerateValid(true);
         }
@@ -49,7 +48,7 @@ void StepNValidateFuzzStrategy::applyStrategy() {
     unsigned int i = 0;
     // always sends the input first. This could be parameterized later
     for (i = 0; i < this->n; i++) {
-        int inpGen = (i == (this->n) - 1) ? (rand() % this->n) : i;
+        int inpGen = (i == (this->n) - 1) ? (rand() % this->inputGenerators.size()) : i;
         msgSend = this->inputGenerators[inpGen]->generateInput(msgRecv);
         // delete the previous message read from output
         if (msgRecv) {
