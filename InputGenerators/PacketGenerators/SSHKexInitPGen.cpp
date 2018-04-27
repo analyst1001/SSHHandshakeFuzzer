@@ -1,5 +1,6 @@
 #include "SSHKexInitPGen.h"
 #include "../../MessageBuffers/BPPMessageBuffer.h"
+#include <iostream>
 
 SSHKexInitPacketGenerator::SSHKexInitPacketGenerator() {
     string kexAlgo1("curve25619-sha256");
@@ -234,6 +235,10 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidReserved() {
 
 BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidPacket() {
     BPPMessageBuffer *packet = new BPPMessageBuffer();
+
+
+
+    cout<<"Generating Valid packeT"<<endl;
 
     BPPMessageBuffer *pktType = generateValidPacketType();
     packet->append(pktType);
