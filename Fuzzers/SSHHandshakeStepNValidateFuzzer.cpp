@@ -7,6 +7,7 @@
 
 SSHHandshakeStepNValidateFuzzer::SSHHandshakeStepNValidateFuzzer() {
     this->strategy = new StepNValidateFuzzStrategy();
+    this->strategy->setWaitForOutput(true);
     this->stream = new SSHClientIOStream();
     this->srvPort = 22;
     this->n = 0;
