@@ -1,4 +1,4 @@
-#include "../MessageBuffer.h"
+#include "../MessageBuffers/MessageBuffer.h"
 
 #ifndef FUZZSTRATEGY_H
 #define FUZZSTRATEGY_H

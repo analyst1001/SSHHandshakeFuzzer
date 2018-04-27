@@ -12,6 +12,7 @@ class MessageBuffer {
     public:
         MessageBuffer();
         MessageBuffer(const char *str);
+        MessageBuffer(unsigned char *str, unsigned int len);
         void push_back(unsigned char chr);
         void pop_back();
         void append(const char *str);

@@ -32,3 +32,9 @@ BPPMessageBuffer::BPPMessageBuffer(const char *str) {
         this->buffer.push_back((unsigned char)str[i]);
     }
 }
+
+BPPMessageBuffer::BPPMessageBuffer(unsigned char *str, unsigned int len) {
+    for (unsigned int i = 0; i < len; i++) {
+        this->buffer.push_back((unsigned char)str[i]);
+    }
+}

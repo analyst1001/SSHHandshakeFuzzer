@@ -11,6 +11,12 @@ MessageBuffer::MessageBuffer(const char *str) {
     }
 }
 
+MessageBuffer::MessageBuffer(unsigned char *str, unsigned int len) {
+    for (unsigned int i = 0; i < len; i++) {
+        this->buffer.push_back((unsigned char)str[i]);
+    }
+}
+
 void MessageBuffer::push_back(unsigned char chr) {
     this->buffer.push_back(chr);
 }
