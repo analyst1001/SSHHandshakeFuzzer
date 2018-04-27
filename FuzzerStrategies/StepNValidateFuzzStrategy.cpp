@@ -45,9 +45,8 @@ bool StepNValidateFuzzStrategy::getWaitForOutput() {
 void StepNValidateFuzzStrategy::applyStrategy() {
     MessageBuffer *msgSend = NULL;
     MessageBuffer *msgRecv = NULL;
-    unsigned int i = 0;
     // always sends the input first. This could be parameterized later
-    for (i = 0; i < this->n; i++) {
+    for (unsigned int i = 0; i < (this->n); i++) {
         int inpGen = (i == (this->n) - 1) ? (rand() % this->inputGenerators.size()) : i;
         msgSend = this->inputGenerators[inpGen]->generateInput(msgRecv);
         // delete the previous message read from output
@@ -61,10 +60,9 @@ void StepNValidateFuzzStrategy::applyStrategy() {
             msgRecv = this->outputStreams[i]->read();   
         }
     }
-    // if we didn't read outputs earlier, read the output now to pass it for verification
-    if (!getWaitForOutput() || (this->n == 0)) {
-        msgRecv = this->outputStreams[i]->read();   
-    }
+/*    if (!getWaitForOutput() || (this->n == 0)) {
+        msgRecv = this->outputStreams[(this->n) - 1]->read();   
+    }*/
     // msgRecv should be non NULL here due to tautology if n > 0
     if (verify != NULL) {
         verify(msgRecv);
