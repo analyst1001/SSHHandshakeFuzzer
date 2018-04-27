@@ -61,8 +61,8 @@ void MessageBuffer::append(MessageBuffer *msg) {
 
 void MessageBuffer::append(unsigned int val) {
     unsigned char *chr = (unsigned char *)&val;
-    for (unsigned int i = 0; i < (sizeof(unsigned int)/sizeof(unsigned char)); i++, chr++) {
-        this->buffer.insert(this->buffer.begin(), *chr);
+    for (int i = 0; i < (sizeof(unsigned int)/sizeof(unsigned char)); i++, chr++) {
+        this->buffer.push_back(*chr);
     }
 }
 

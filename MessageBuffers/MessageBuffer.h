@@ -7,9 +7,9 @@ using namespace std;
 #define MSGBUF_H
 class MessageBuffer {
     protected:
-        vector<unsigned char> buffer;
 
     public:
+        vector<unsigned char> buffer;
         MessageBuffer();
         MessageBuffer(const char *str);
         MessageBuffer(unsigned char *str, unsigned int len);

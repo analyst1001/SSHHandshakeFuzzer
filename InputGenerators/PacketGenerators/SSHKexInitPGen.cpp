@@ -1,6 +1,7 @@
 #include "SSHKexInitPGen.h"
 #include "../../MessageBuffers/BPPMessageBuffer.h"
 #include <iostream>
+#include <cstdio>
 
 SSHKexInitPacketGenerator::SSHKexInitPacketGenerator() {
     string kexAlgo1("curve25619-sha256");
@@ -236,29 +237,47 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidReserved() {
 BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidPacket() {
     BPPMessageBuffer *packet = new BPPMessageBuffer();
 
-
-
     cout<<"Generating Valid packeT"<<endl;
+    for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
+        printf("%x ", *it);
+    }
+    printf("\n");
 
     BPPMessageBuffer *pktType = generateValidPacketType();
     packet->append(pktType);
     delete pktType;
+    for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
+        printf("%x ", *it);
+    }
+    printf("\n");
 
     BPPMessageBuffer *cookie = generateCookie();
     packet->append(cookie);
     delete cookie;
+    for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
+        printf("%x ", *it);
+    }
+    printf("\n");
     
     BPPMessageBuffer *kexAlgoList = generateValidAlgorithmList(KEX);
     unsigned int kexAlgoListLen = kexAlgoList->length();
     packet->append(kexAlgoListLen);
     packet->append(kexAlgoList);
     delete kexAlgoList;
+    for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
+        printf("%x ", *it);
+    }
+    printf("\n");
 
     BPPMessageBuffer *srvHostKeyAlgoList = generateValidAlgorithmList(SRV_HOST_KEY);
     unsigned int srvHostKeyAlgoListLen = srvHostKeyAlgoList->length();
     packet->append(srvHostKeyAlgoListLen);
     packet->append(srvHostKeyAlgoList);
     delete srvHostKeyAlgoList;
+    for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
+        printf("%x ", *it);
+    }
+    printf("\n");
 
     BPPMessageBuffer *encAlgoListCS = generateValidAlgorithmList(ENCRYPTION);
     unsigned int encAlgoListCSLen = encAlgoListCS->length();
@@ -309,6 +328,11 @@ BPPMessageBuffer *SSHKexInitPacketGenerator::generateValidPacket() {
     BPPMessageBuffer *reserved = generateValidReserved();
     packet->append(reserved);
     delete reserved;
+
+    for (vector<unsigned char>::iterator it = packet->buffer.begin(); it != packet->buffer.end(); it++) {
+        printf("%x ", *it);
+    }
+    printf("\n");
 
     return packet;
 }
