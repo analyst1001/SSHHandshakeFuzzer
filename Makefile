@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=
+CFLAGS=-g
 LDFLAGS=
 
 default:

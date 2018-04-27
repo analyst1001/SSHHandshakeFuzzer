@@ -7,6 +7,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
     if (argc < 4) {
         cout<<"USAGE:"<<argv[0]<<" <server IP> <service port> <N>"<<endl;
+        return 1;
     }
     SSHHandshakeStepNValidateFuzzer *fuzzer = new SSHHandshakeStepNValidateFuzzer();
     fuzzer->setSSHServerIPAddr(argv[1]);
@@ -14,5 +15,6 @@ int main(int argc, char *argv[]) {
     fuzzer->setN(atoi(argv[3]));
     fuzzer->fuzz();
     delete fuzzer;
+    
     return 0;
 }

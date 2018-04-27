@@ -33,15 +33,15 @@ void SSHHandshakeStepNValidateFuzzer::fuzz() {
     this->stream->setSSHServerAddr(this->srvIP);
     this->stream->setSSHServerPort(srvPort);
     this->stream->openStream(); 
-    vector<SSHClientIOStream*> inputStreams(n, this->stream);
-    vector<SSHClientIOStream*> outputStreams(n, this->stream);
+    vector<OStream*> inputStreams(n, this->stream);
+    vector<IStream*> outputStreams(n, this->stream);
     
     SSHVersionPacketGenerator *pkt0Gen = new SSHVersionPacketGenerator();
     SSHKexInitPacketGenerator *pkt1Gen = new SSHKexInitPacketGenerator();
     SSHKexDHInitPacketGenerator *pkt2Gen = new SSHKexDHInitPacketGenerator();
     SSHNewKeysPacketGenerator *pkt3Gen = new SSHNewKeysPacketGenerator();
     
-    vector<PacketGenerator*> inputGenerators;
+    vector<ValidInvalidInputGenerator*> inputGenerators;
     inputGenerators.push_back(pkt0Gen);
     inputGenerators.push_back(pkt1Gen);
     inputGenerators.push_back(pkt2Gen);
