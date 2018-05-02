@@ -13,7 +13,10 @@ SSHClientIOStream::SSHClientIOStream() {
 }
 
 SSHClientIOStream::~SSHClientIOStream() {
-    this->sockfd = INVALID_FD;
+    if (this->sockfd != INVALID_FD) {
+        closeStream();
+    	this->sockfd = INVALID_FD;
+    }
     if (this->srvAddr) {
         free(this->srvAddr);
     }
